@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import "./App.css";
 import {Todolist} from "./components/Todolist";
 import {v1} from "uuid";
@@ -33,22 +33,26 @@ function App() {
     const todolists = useSelector<AppStateType, TodoType[]>((state) => state.todolists);
     const dispatch = useDispatch();
 
-    const addTodolist = (title: string) => {
-        let id = v1()
-        dispatch(addTodolistAC(id, title));
-    }
+    const addTodolist = useCallback(
+        (title: string) => {
+            let id = v1()
+            dispatch(addTodolistAC(id, title));
+        },
+        []
+    );
 
-    const changeTodoTitle = (newTitle: string, id: string) => {
+
+    const changeTodoTitle = useCallback((newTitle: string, id: string) => {
         dispatch(changeTodolistTitleAC(id, newTitle));
-    }
+    }, []);
 
-    const removeTodo = (todoId: string) => {
+    const removeTodo = useCallback((todoId: string) => {
         dispatch(removeTodolistAC(todoId));
-    }
+    }, []);
 
-    const changeFilter = (todoID: string, filter: FilterType) => {
+    const changeFilter = useCallback((todoID: string, filter: FilterType) => {
         dispatch(changeTodolistFilterAC(todoID, filter));
-    }
+    }, []);
 
     return (<div className="App">
             <AppBar position="static">

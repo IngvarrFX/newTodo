@@ -8,18 +8,16 @@ type AddItemFormPropsType = {
     placeholder: string
     callback: (title: string) => void
 }
-export const AddItemForm = (props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     const {placeholder, callback} = props;
     const [value, setValue] = useState<string>("");
     const [error, setError] = useState("");
 
     console.log("AddItemForm")
 
-
     const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-
+        error && setError("");
         setValue(e.currentTarget.value);
-        setError("");
     }
 
     const onKeyPressHandle = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -40,6 +38,7 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
             setError("Field is require!")
         }
     }
+
     return (
         <div className={styles.AddItemForm}>
             <div className={styles.wrapper}>
@@ -58,9 +57,8 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                 <IconButton aria-label="add" size="medium" onClick={addItem}>
                     <AddBox color={"inherit"}/>
                 </IconButton>
-                {/*{error && <div className={styles.error}>{error}</div>}*/}
             </div>
         </div>
 
     );
-};
+})
