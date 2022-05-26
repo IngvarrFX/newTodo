@@ -1,6 +1,6 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useMemo} from "react";
 import {Button, IconButton} from "@material-ui/core";
-import {FilterType, TasksType} from "../../App";
+import {FilterType, TasksType, TaskType} from "../../App";
 import {Task} from "../Task";
 import styles from "./Todolist.module.css"
 import {AddItemForm} from "../AddItemForm";
@@ -22,6 +22,7 @@ type TodolistPropsType = {
 
 
 export const Todolist = React.memo((props: TodolistPropsType) => {
+
     const filter: Array<{ filter: FilterType }> = [
         {filter: "All"},
         {filter: "Completed"},
@@ -36,7 +37,16 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         changeTodoTitle,
     } = props;
 
-    const tasks = useSelector<AppStateType, TasksType>((state) => state.tasks);
+    const tasks = useSelector<AppStateType, TasksType>((state) => state.tasks)[todoID].filter((task)=> {
+        if (filterTodo === "Completed") {
+                    return task.isDone;
+                }
+                if (filterTodo === "Active") {
+                    return !task.isDone;
+                }
+                return task;
+    });
+
     const dispatch = useDispatch();
 
     const addTaskWrapper = useCallback((title: string) => {
@@ -46,14 +56,6 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     const changeTodoTitleHandle = useCallback((newTitle: string) => {
         changeTodoTitle(newTitle, todoID,);
     },[])
-
-    let filteredTasks = tasks[todoID];
-    if (filterTodo === "Completed") {
-        filteredTasks = tasks[todoID].filter((task) => task.isDone);
-    }
-    if (filterTodo === "Active") {
-        filteredTasks = tasks[todoID].filter((task) => !task.isDone);
-    }
 
     return (
         <div className={styles.Wrapper}>
@@ -74,7 +76,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                 </div>
 
 
-                {filteredTasks.map((task) => {
+                {tasks.map((task) => {
                     return <div
                         style={{display: "flex", marginBottom: "5px", justifyContent: "space-between", width: "100%"}}
                         key={task.id}>
