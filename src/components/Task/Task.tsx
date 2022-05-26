@@ -12,13 +12,12 @@ type TaskPropsType = {
     todoId: string
 }
 
-export const Task = (props: TaskPropsType) => {
+export const Task = React.memo((props: TaskPropsType) => {
     const {task, todoId} = props;
     const dispatch = useDispatch();
     const color = task.isDone ? "0.5" : "1";
     return (
         <div className={styles.TaskBlock}>
-            {/*<Checkbox checked={task.isDone} callBack={(value) => changeTaskStatus(todoId, task.id, value)}/>*/}
             <Checkbox checked={task.isDone} color="primary"
                       onChange={(e) => dispatch(changeTaskStatusAC(todoId, task.id, e.currentTarget.checked))}/>
             <div style={{marginRight: "5px", opacity: color}}>
@@ -28,4 +27,4 @@ export const Task = (props: TaskPropsType) => {
             </div>
         </div>
     );
-};
+});
