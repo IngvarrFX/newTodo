@@ -19,7 +19,7 @@ export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
     const onBlurHandle = useCallback(() => {
         changeTitle(value);
         setEdit(false);
-    }, []);
+    }, [changeTitle, value]);
     const onChangeHandle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
     }, []);
@@ -29,7 +29,7 @@ export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
             changeTitle(value);
             setEdit(false);
         }
-    }, []);
+    }, [changeTitle, value]);
     return (
         <div className={styles.Wrapper}>
             {

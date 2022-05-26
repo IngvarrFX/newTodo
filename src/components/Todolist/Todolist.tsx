@@ -1,6 +1,6 @@
-import React, {useCallback, useMemo} from "react";
+import React, {useCallback} from "react";
 import {Button, IconButton} from "@material-ui/core";
-import {FilterType, TasksType, TaskType} from "../../App";
+import {FilterType, TasksType} from "../../App";
 import {Task} from "../Task";
 import styles from "./Todolist.module.css"
 import {AddItemForm} from "../AddItemForm";
@@ -51,11 +51,11 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
 
     const addTaskWrapper = useCallback((title: string) => {
         dispatch(addTaskAC(todoID, title));
-    },[]);
+    },[dispatch, todoID]);
 
     const changeTodoTitleHandle = useCallback((newTitle: string) => {
         changeTodoTitle(newTitle, todoID,);
-    },[])
+    },[changeTodoTitle, todoID])
 
     return (
         <div className={styles.Wrapper}>

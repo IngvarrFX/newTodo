@@ -13,8 +13,6 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     const [value, setValue] = useState<string>("");
     const [error, setError] = useState("");
 
-    console.log("AddItemForm")
-
     const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError("");
         setValue(e.currentTarget.value);

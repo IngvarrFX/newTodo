@@ -38,21 +38,21 @@ function App() {
             let id = v1()
             dispatch(addTodolistAC(id, title));
         },
-        []
+        [dispatch]
     );
 
 
     const changeTodoTitle = useCallback((newTitle: string, id: string) => {
         dispatch(changeTodolistTitleAC(id, newTitle));
-    }, []);
+    }, [dispatch]);
 
     const removeTodo = useCallback((todoId: string) => {
         dispatch(removeTodolistAC(todoId));
-    }, []);
+    }, [dispatch]);
 
     const changeFilter = useCallback((todoID: string, filter: FilterType) => {
         dispatch(changeTodolistFilterAC(todoID, filter));
-    }, []);
+    }, [dispatch]);
 
     return (<div className="App">
             <AppBar position="static">
