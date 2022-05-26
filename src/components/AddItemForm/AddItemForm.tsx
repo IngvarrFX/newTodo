@@ -13,8 +13,11 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     const [value, setValue] = useState<string>("");
     const [error, setError] = useState("");
 
+    console.log("AddItemForm")
+
 
     const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
+
         setValue(e.currentTarget.value);
         setError("");
     }
@@ -40,7 +43,7 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     return (
         <div className={styles.AddItemForm}>
             <div className={styles.wrapper}>
-                <TextField id="outlined-basic" label={placeholder} variant="outlined"
+                <TextField label={placeholder} variant="outlined"
                            className={styles.Input}
                            placeholder={placeholder}
                            value={value}
