@@ -8,8 +8,8 @@ type ButtonPropsType = {
     disabled?: boolean
 }
 
-export const Button = (props: ButtonPropsType) => {
+export const Button = React.memo((props: ButtonPropsType) => {
     const {title, callBack, disabled} = props;
     return (<button className={styles.button} disabled={disabled} onClick={callBack}>{title}</button>
     );
-};
+});

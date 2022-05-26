@@ -5,7 +5,7 @@ type CheckboxPropsType = {
     callBack: (value: boolean) => void
 }
 
-export const Checkbox = (props: CheckboxPropsType) => {
+export const Checkbox = React.memo((props: CheckboxPropsType) => {
     const {checked, callBack} = props;
 
     const onCheckHandle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -13,4 +13,4 @@ export const Checkbox = (props: CheckboxPropsType) => {
     }
     return (<input onChange={onCheckHandle} type="checkbox" checked={checked}/>
     );
-};
+});

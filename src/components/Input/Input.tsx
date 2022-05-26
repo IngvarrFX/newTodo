@@ -8,7 +8,7 @@ type InputPropsType = {
     addItem: (title: string) => void
 }
 
-export const Input = (props: InputPropsType) => {
+export const Input = React.memo((props: InputPropsType) => {
     const {placeholder, value, callBack, addItem} = props;
 
     const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,4 +26,4 @@ export const Input = (props: InputPropsType) => {
             <input placeholder={placeholder} value={value} onChange={onChangeHandle} onKeyPress={onKeyPressHandle}/>
         </div>
     );
-};
+});

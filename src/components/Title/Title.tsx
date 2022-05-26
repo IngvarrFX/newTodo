@@ -5,11 +5,11 @@ type TitlePropsType = {
     title: string
 }
 
-export const Title = (props: TitlePropsType) => {
+export const Title = React.memo((props: TitlePropsType) => {
     const {title} = props;
     return (
         <div>
             {title}
         </div>
     );
-};
+});
