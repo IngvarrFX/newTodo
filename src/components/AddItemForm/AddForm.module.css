@@ -1,0 +1,24 @@
+.AddItemForm {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.wrapper {
+    width: 80%;
+}
+
+.error {
+    color: red;
+}
+
+.Input {
+    width: 100%;
+}
+.Icon{
+    position: absolute;
+    right: 0;
+    top: 4px
+}
+
