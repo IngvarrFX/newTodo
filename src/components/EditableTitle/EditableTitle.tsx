@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from "react";
 import styles from "./EditableTitle.module.css";
 import {TextField} from "@material-ui/core";
 
@@ -8,34 +8,34 @@ type EditableTitlePropsType = {
     changeTitle: (newTitle: string) => void
 }
 
-export const EditableTitle = (props: EditableTitlePropsType) => {
+export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
     const {title, changeTitle} = props;
     const [edit, setEdit] = useState<boolean>(false);
     const [value, setValue] = useState<string>(title)
 
-    const onDoubleClickHandle = () => {
+    const onDoubleClickHandle = useCallback(() => {
         setEdit(true);
-    }
-    const onBlurHandle = () => {
+    }, []);
+    const onBlurHandle = useCallback(() => {
         changeTitle(value);
         setEdit(false);
-    }
-    const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
+    }, []);
+    const onChangeHandle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
-    }
+    }, []);
 
-    const onKeyPressHandle = (e: KeyboardEvent<HTMLDivElement>)=> {
+    const onKeyPressHandle = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === "Enter" || e.key === "Escape") {
             changeTitle(value);
             setEdit(false);
         }
-    }
+    }, []);
     return (
         <div className={styles.Wrapper}>
             {
                 edit
                     ?
-                    <TextField style={{width: "100%"}} id="outlined-basic" variant='standard'
+                    <TextField style={{width: "100%"}} id="outlined-basic" variant="standard"
                                className={styles.Input}
                                value={value}
                                onChange={onChangeHandle}
@@ -48,4 +48,4 @@ export const EditableTitle = (props: EditableTitlePropsType) => {
             }
         </div>
     );
-};
+});

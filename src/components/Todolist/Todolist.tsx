@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Button, IconButton} from "@material-ui/core";
 import {FilterType, TasksType} from "../../App";
 import {Task} from "../Task";
@@ -21,7 +21,7 @@ type TodolistPropsType = {
 }
 
 
-export const Todolist = (props: TodolistPropsType) => {
+export const Todolist = React.memo((props: TodolistPropsType) => {
     const filter: Array<{ filter: FilterType }> = [
         {filter: "All"},
         {filter: "Completed"},
@@ -39,13 +39,13 @@ export const Todolist = (props: TodolistPropsType) => {
     const tasks = useSelector<AppStateType, TasksType>((state) => state.tasks);
     const dispatch = useDispatch();
 
-    const addTaskWrapper = (title: string) => {
+    const addTaskWrapper = useCallback((title: string) => {
         dispatch(addTaskAC(todoID, title));
-    };
+    },[]);
 
-    const changeTodoTitleHandle = (newTitle: string) => {
+    const changeTodoTitleHandle = useCallback((newTitle: string) => {
         changeTodoTitle(newTitle, todoID,);
-    }
+    },[])
 
     let filteredTasks = tasks[todoID];
     if (filterTodo === "Completed") {
@@ -103,4 +103,4 @@ export const Todolist = (props: TodolistPropsType) => {
 
         </div>
     );
-};
+});
