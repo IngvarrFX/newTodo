@@ -4,6 +4,7 @@
     justify-content: space-between;
     margin: 20px;
     width: 350px;
+    min-height: 450px;
     border-radius: 5px;
     padding: 20px;
     -webkit-box-shadow: 3px 4px 22px -3px rgba(34, 60, 80, 0.13);
