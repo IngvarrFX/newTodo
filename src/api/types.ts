@@ -12,5 +12,24 @@ export type ResponseDataType<D = {}> = {
 }
 
 export type CreateResponseType = {
-    item:   ResponseType
+    item: ResponseType
+}
+
+export interface ITaskType {
+    addedDate: string,
+    deadline: null,
+    description: null,
+    id: string,
+    order: number,
+    priority: number,
+    startDate: null,
+    status: number,
+    title: string,
+    todoListId: string,
+    completed: boolean,
+}
+
+export enum TaskStatus {
+    isDone = 2,
+    notIsDone = 0,
 }
