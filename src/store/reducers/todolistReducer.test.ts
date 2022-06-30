@@ -1,22 +1,23 @@
-import {TodoType} from "../../App";
 import {todolistReducer} from "./todolistReducer";
 import {addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../actions";
 import {v1} from "uuid";
+import {TodoType} from "../../components/Todolists/types";
 
 let todolists: Array<TodoType>;
 
 beforeEach(() => {
     todolists = [
-        {id: "todolistID1", title: "What to learn", filter: "All"},
-        {id: "todolistID2", title: "What to need", filter: "All"},
+        {id: "todolistID1", title: "What to learn", filter: "All", addedDate: "", order: +v1()},
+        {id: "todolistID2", title: "What to need", filter: "All", addedDate: "", order: +v1()},
     ];
 })
 
 test("shoud be add todolist", () => {
-    const newTodo = todolistReducer(todolists, addTodolistAC(v1(),"New Todo"));
+    const newTodolist: TodoType = {id: "todolistID1", title: "What to fix", filter: "All", addedDate: "", order: +v1()};
+    const newTodo = todolistReducer(todolists, addTodolistAC(newTodolist.id, newTodolist));
 
     expect(newTodo.length).toBe(3);
-    expect(newTodo[0].title).toBe("New Todo");
+    expect(newTodo[0].title).toBe("What to fix");
 })
 
 test("shoud be remove todolist", () => {
