@@ -1,14 +1,16 @@
-import React, {useCallback} from "react";
-import {Button, IconButton} from "@material-ui/core";
-import {FilterType, TasksType} from "../../App";
+import React, {Dispatch, useCallback, useEffect} from "react";
+import {Box, Button, CircularProgress, IconButton} from "@material-ui/core";
 import {Task} from "../Task";
 import styles from "./Todolist.module.css"
 import {AddItemForm} from "../AddItemForm";
 import {EditableTitle} from "../EditableTitle";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
-import {addTaskAC, removeTaskAC} from "../../store/actions";
+import {removeTaskAC} from "../../store/actions";
 import {AppStateType} from "../../store/store";
+import {createTaskTC, getTasksTC} from "../../store/thunks/taskThunks";
+import {FilterType} from "../Todolists/types";
+import {TaskStatus} from "../../api/types";
 
 
 type TodolistPropsType = {
@@ -20,7 +22,6 @@ type TodolistPropsType = {
     changeTodoTitle: (newTitle: string, id: string) => void
 }
 
-
 export const Todolist = React.memo((props: TodolistPropsType) => {
 
     const filter: Array<{ filter: FilterType }> = [
@@ -28,6 +29,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         {filter: "Completed"},
         {filter: "Active"},
     ]
+
     const {
         todoID,
         title,
@@ -37,25 +39,35 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         changeTodoTitle,
     } = props;
 
-    const tasks = useSelector<AppStateType, TasksType>((state) => state.tasks)[todoID].filter((task)=> {
-        if (filterTodo === "Completed") {
-                    return task.isDone;
-                }
-                if (filterTodo === "Active") {
-                    return !task.isDone;
-                }
-                return task;
-    });
+    const tasks = useSelector<AppStateType, any>((state) => state.tasks)[todoID]
+    const dispatch: Dispatch<any> = useDispatch();
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTasksTC(todoID))
+    }, [])
 
     const addTaskWrapper = useCallback((title: string) => {
-        dispatch(addTaskAC(todoID, title));
-    },[dispatch, todoID]);
+        dispatch(createTaskTC(todoID, title));
+    }, [dispatch, todoID]);
 
     const changeTodoTitleHandle = useCallback((newTitle: string) => {
         changeTodoTitle(newTitle, todoID,);
-    },[changeTodoTitle, todoID])
+    }, [changeTodoTitle, todoID])
+
+    let tasksForTodolist = tasks
+
+    if (filterTodo === "Active") {
+        tasksForTodolist = tasks.filter((t: any) => t.status === TaskStatus.isDone)
+    }
+    if (filterTodo === "Completed") {
+        tasksForTodolist = tasks.filter((t: any) => t.status === TaskStatus.notIsDone)
+    }
+
+    if (!tasks) {
+        return <Box sx={{display: "flex"}}>
+            <CircularProgress size={"30px"}/>
+        </Box>
+    }
 
     return (
         <div className={styles.Wrapper}>
@@ -75,8 +87,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                     <AddItemForm placeholder={"New task"} callback={addTaskWrapper}/>
                 </div>
 
-
-                {tasks.map((task) => {
+                {tasksForTodolist.map((task: any) => {
                     return <div
                         style={{display: "flex", marginBottom: "5px", justifyContent: "space-between", width: "100%"}}
                         key={task.id}>
