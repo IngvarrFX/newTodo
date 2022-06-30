@@ -1,4 +1,4 @@
-import {FilterType, TodoType} from "../../components/Todolists/types";
+import {FilterType, TaskType, TodoType} from "../../components/Todolists/types";
 
 export type ToggleInitializingType = {
     type: "INITIALIZING"
@@ -49,9 +49,7 @@ export type RemoveTaskType = {
 
 export type AddTaskType = {
     type: "ADD_TASK"
-    todoId: string
-    taskId: string
-    title: string
+    task: TaskType
 };
 
 export type ChangeTaskStatusType = {
