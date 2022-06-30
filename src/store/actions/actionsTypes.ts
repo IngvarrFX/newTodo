@@ -1,9 +1,21 @@
-import {FilterType} from "../../App";
+import {FilterType, TodoType} from "../../components/Todolists/types";
+
+export type ToggleInitializingType = {
+    type: "INITIALIZING"
+    payload: {
+        initializing: boolean
+    }
+};
+
+export type SetTodolistsType = {
+    type: "SET_TODOLISTS"
+    todolists: any
+};
 
 export type AddTodolistType = {
     type: "ADD_TODOLIST"
     todoId: string
-    title: string
+    newTodolist: TodoType
 };
 
 export type RemoveTodolistType = {
@@ -23,6 +35,12 @@ export type ChangeTodolistTitleType = {
     title: string
 };
 
+export type SetTasksType = {
+    type: "SET_TASKS"
+    todoId: string
+    tasks: any
+};
+
 export type RemoveTaskType = {
     type: "REMOVE_TASK"
     todoId: string
@@ -32,6 +50,7 @@ export type RemoveTaskType = {
 export type AddTaskType = {
     type: "ADD_TASK"
     todoId: string
+    taskId: string
     title: string
 };
 
@@ -39,7 +58,7 @@ export type ChangeTaskStatusType = {
     type: "CHANGE_TASK_STATUS"
     todoId: string
     taskId: string
-    status: boolean
+    status: number
 };
 
 export type ChangeTaskTitleType = {
