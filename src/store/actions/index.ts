@@ -9,4 +9,5 @@ export type {
     AddTaskType,
     ChangeTaskStatusType,
     ChangeTaskTitleType,
+    ToggleInitializingType,
 } from "./actionsTypes";
