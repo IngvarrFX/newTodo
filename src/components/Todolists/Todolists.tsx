@@ -53,7 +53,7 @@ export const Todolists = () => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-            <div className={"AddField"}>
+            <div className={styles.AddField}>
                 <AddItemForm placeholder={"New todolist"} callback={addTodolist}/>
             </div>
             <div className={styles.Todolists}>
