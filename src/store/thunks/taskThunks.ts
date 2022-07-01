@@ -3,6 +3,7 @@ import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "../store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, setTasksAC} from "../actions/tasksActions";
 import {tasksApi} from "../../api/todolists-api";
+import {TaskType} from "../../components/Todolists/types";
 
 export const getTasksTC = (todoId: string): ThunkAction<void, AppStateType, unknown, AnyAction> => (dispatch) => {
     tasksApi.getTasks(todoId).then((tasks) => {
@@ -13,8 +14,8 @@ export const getTasksTC = (todoId: string): ThunkAction<void, AppStateType, unkn
 }
 
 export const createTaskTC = (todoId: string, title: string): ThunkAction<void, AppStateType, unknown, AnyAction> => (dispatch) => {
-    tasksApi.createTask(todoId, title).then((tasks) => {
-        dispatch(addTaskAC(todoId, tasks.data.item.id, title))
+    tasksApi.createTask(todoId, title).then((task:TaskType) => {
+        dispatch(addTaskAC(task))
     }).catch((err) => {
         console.log(err)
     })
