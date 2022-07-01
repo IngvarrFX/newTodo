@@ -4,22 +4,47 @@
     justify-content: space-between;
     margin: 20px;
     width: 350px;
-    min-height: 450px;
     border-radius: 5px;
     padding: 20px;
     -webkit-box-shadow: 3px 4px 22px -3px rgba(34, 60, 80, 0.13);
     -moz-box-shadow: 3px 4px 22px -3px rgba(34, 60, 80, 0.13);
     box-shadow: 3px 4px 22px -3px rgba(34, 60, 80, 0.13);
-}
-.TasksBlock {
-    width: 100%;
+    position: relative;
 }
 
-.FilterBtn{
+.InputBlock {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    padding-bottom: 5px;
+    z-index: 1;
+}
+
+.TasksBlock {
+    width: 100%;
+    height: 500px;
+    overflow: scroll;
+    scroll-behavior: smooth;
+}
+
+.FilterBtn {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    padding: 10px 0;
 }
+
 .Active {
     background-color: aquamarine;
+}
+
+.tasksWrapper {
+
+}
+
+.tasks {
+    display: flex;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    width: 100%;
 }
