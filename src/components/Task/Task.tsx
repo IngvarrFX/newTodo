@@ -3,7 +3,7 @@ import styles from "./Task.module.css"
 import {EditableTitle} from "../EditableTitle";
 import Checkbox from "@material-ui/core/Checkbox";
 import {useDispatch} from "react-redux";
-import {TaskStatus} from "../../api/types";
+import {TaskStatuses} from "../../api/types";
 import {updateTaskTC} from "../../store/thunks/taskThunks";
 
 
@@ -26,12 +26,12 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     const onChangeTaskStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
         const taskStatus = e.currentTarget.checked;
-        dispatch(updateTaskTC(todoId, task.id, task.title, taskStatus ? TaskStatus.isDone : TaskStatus.notIsDone))
+        dispatch(updateTaskTC(todoId, task.id, task.title, taskStatus ? TaskStatuses.Completed : TaskStatuses.New))
     }
 
     return (
         <div className={styles.TaskBlock}>
-            <Checkbox checked={task.status === TaskStatus.isDone} color="primary"
+            <Checkbox checked={task.status === TaskStatuses.Completed} color="primary"
                       onChange={onChangeTaskStatus}/>
             <div style={{marginRight: "5px", opacity: color}}>
                 <EditableTitle title={task.title}
