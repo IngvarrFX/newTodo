@@ -1,11 +1,10 @@
 import {AddTaskType, ChangeTaskStatusType, ChangeTaskTitleType, RemoveTaskType, SetTasksType} from "./actionsTypes";
+import {TaskType} from "../../components/Todolists/types";
 
-export const addTaskAC = (todoId: string, taskId: string, title: string): AddTaskType => {
+export const addTaskAC = (task: TaskType): AddTaskType => {
     return {
         type: "ADD_TASK",
-        todoId,
-        taskId,
-        title,
+        task
     }
 };
 
