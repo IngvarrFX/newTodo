@@ -1,9 +1,11 @@
+import {TaskPriorities} from "../../api/types";
+
 export type TaskType = {
     description: string
     title: string
     completed: boolean
     status: number
-    priority: number
+    priority: TaskPriorities
     startDate: string
     deadline: string
     id: string
