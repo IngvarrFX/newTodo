@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import {taskReducer, todolistReducer} from "./reducers";
 import {TodolistActionsType} from "./reducers/todolistReducer";
 import {TaskActionsType} from "./reducers/taskReducer";
-import {appReducer} from "./reducers/appReducer";
+import {appReducer} from "./reducers";
 
 const rootReducer = combineReducers({
     app: appReducer,
@@ -22,4 +22,7 @@ export const store: Store<AppStateType, AppActionType> & {
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 export type AppActionType = TodolistActionsType | TaskActionsType
-type DispatchType = (args: AppActionType) => AppActionType;
+export type DispatchType = (args: AppActionType) => AppActionType;
+
+//@ts-ignore
+window.state = store.getState
