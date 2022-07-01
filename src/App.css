@@ -2,15 +2,3 @@
     display: flex;
     flex-direction: column;
 }
-
-
-.AddField{
-    display: flex;
-    margin: 20px;
-    width: 350px;
-}
-
-.Todolists{
-    display: flex;
-}
-
