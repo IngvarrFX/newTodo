@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ResponseDataType} from "./types";
+import {ResponseDataType, TaskPriorities} from "./types";
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1/",
@@ -28,10 +28,10 @@ export const todolistsApi = {
 
 export const tasksApi = {
     getTasks: (todoId: string) => {
-        return instance.get(`todo-lists/${todoId}/tasks`).then(res => res.data.items)
+        return instance.get(`todo-lists/${todoId}/tasks?count=100`).then(res => res.data.items)
     },
     createTask: (todoId: string, title: string) => {
-        return instance.post(`todo-lists/${todoId}/tasks`, {title}).then(res => res.data.items)
+        return instance.post(`todo-lists/${todoId}/tasks`, {title}).then(res => res.data.data.item)
     },
     updateTask: (todoId: string, taskId: string, title: string, status: number) => {
         const data = {
@@ -39,7 +39,7 @@ export const tasksApi = {
             completed: false,
             description: "",
             status,
-            priority: 0,
+            priority: TaskPriorities.Low,
             startDate: "",
             deadline: "",
         }
