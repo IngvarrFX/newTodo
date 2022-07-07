@@ -35,7 +35,7 @@ export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
             {
                 edit
                     ?
-                    <TextField style={{width: "100%"}} id="outlined-basic" variant="standard"
+                    <TextField id="outlined-basic" variant="standard"
                                className={styles.Input}
                                value={value}
                                onChange={onChangeHandle}
@@ -44,7 +44,7 @@ export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
                                autoFocus
 
                     />
-                    : <span onDoubleClick={onDoubleClickHandle}>{title}</span>
+                    : <div className={styles.title} onDoubleClick={onDoubleClickHandle}>{title}</div>
             }
         </div>
     );
