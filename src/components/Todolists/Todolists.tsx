@@ -1,38 +1,43 @@
-import React, {Dispatch, useCallback, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../store/store";
+import React, {useCallback, useEffect} from "react";
 import {changeTodolistFilterAC} from "../../store/actions";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {AddItemForm} from "../AddItemForm";
 import {Todolist} from "../Todolist";
-import {FilterType, TodoType} from "./types";
+import {FilterType} from "./types";
 import styles from "./Todolists.module.css";
 import {addTodolistTC, getTodolistsTC, removeTodolistTC, updateTodolistTC} from "../../store/thunks/todoThunks";
+import {useAppSelector} from "../../hooks";
+import {Dispatch} from "redux";
+import {useDispatch} from "react-redux";
 
 export const Todolists = () => {
 
-    const todolists = useSelector<AppStateType, TodoType[]>((state) => state.todolists);
-    const dispatch: Dispatch<any> = useDispatch();
+    const todolists = useAppSelector(state => state.todolists)
+    const dispatch:Dispatch = useDispatch();
 
     useEffect(() => {
         if (!todolists.length) {
+            // @ts-ignore
             dispatch(getTodolistsTC())
         }
     }, [])
 
     const addTodolist = useCallback(
         (title: string) => {
+            // @ts-ignore
             dispatch(addTodolistTC(title));
         },
         [dispatch]
     );
 
     const changeTodoTitle = useCallback((newTitle: string, id: string) => {
+        // @ts-ignore
         dispatch(updateTodolistTC(id, newTitle))
     }, [dispatch]);
 
     const removeTodo = useCallback((todoId: string) => {
+        // @ts-ignore
         dispatch(removeTodolistTC(todoId));
     }, [dispatch]);
 

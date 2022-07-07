@@ -1,16 +1,17 @@
-import React, {Dispatch, useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {Button, IconButton} from "@material-ui/core";
 import {Task} from "../Task";
 import styles from "./Todolist.module.css"
 import {AddItemForm} from "../AddItemForm";
 import {EditableTitle} from "../EditableTitle";
 import {Delete} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../store/store";
 import {createTaskTC, getTasksTC, removeTaskTC} from "../../store/thunks/taskThunks";
 import {FilterType} from "../Todolists/types";
 import {TaskStatuses} from "../../api/types";
 import {Preloader} from "../Preloader";
+import {useAppSelector} from "../../hooks";
+import {useDispatch} from "react-redux";
+import {Dispatch} from "redux";
 
 
 type TodolistPropsType = {
@@ -39,20 +40,27 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         changeTodoTitle,
     } = props;
 
-    const tasks = useSelector<AppStateType, any>((state) => state.tasks)[todoID];
-    const dispatch: Dispatch<any> = useDispatch();
+    const tasks = useAppSelector((state) => state.tasks)[todoID];
+    const dispatch:Dispatch = useDispatch();
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getTasksTC(todoID))
     }, [])
 
     const addTaskWrapper = useCallback((title: string) => {
+        // @ts-ignore
         dispatch(createTaskTC(todoID, title));
     }, [dispatch, todoID]);
 
     const changeTodoTitleHandle = useCallback((newTitle: string) => {
         changeTodoTitle(newTitle, todoID,);
     }, [changeTodoTitle, todoID])
+
+    const removeTaskHandle = (taskId: string)=> {
+        //@ts-ignore
+        dispatch(removeTaskTC(todoID, taskId))
+    }
 
     let tasksForTodolist = tasks
 
@@ -96,7 +104,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                                 todoId={todoID}
                             />
                             <IconButton aria-label="delete" size="medium"
-                                        onClick={() => dispatch(removeTaskTC(todoID, task.id))}>
+                                        onClick={() => removeTaskHandle(task.id)}>
                                 <Delete color={"inherit"}/>
                             </IconButton>
                         </div>
