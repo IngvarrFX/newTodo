@@ -1,3 +1,15 @@
 .Wrapper {
     width:100%;
+    overflow: scroll;
+    scroll-behavior: smooth;
+}
+.title {
+    width: 93%;
+    padding: 10px 0;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    word-wrap: break-word;
+}
+.Input{
+    width: 92%;
 }

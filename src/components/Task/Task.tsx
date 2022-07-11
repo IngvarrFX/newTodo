@@ -1,10 +1,10 @@
-import React, {Dispatch} from "react";
+import React from "react";
 import styles from "./Task.module.css"
 import {EditableTitle} from "../EditableTitle";
 import Checkbox from "@material-ui/core/Checkbox";
-import {useDispatch} from "react-redux";
 import {TaskStatuses} from "../../api/types";
 import {updateTaskTC} from "../../store/thunks/taskThunks";
+import {useDispatch} from "react-redux";
 
 
 type TaskPropsType = {
@@ -14,13 +14,13 @@ type TaskPropsType = {
 
 export const Task = React.memo((props: TaskPropsType) => {
     const {task, todoId} = props;
-    const dispatch: Dispatch<any> = useDispatch();
+    const dispatch: any = useDispatch();
 
     const color = task.status ? "0.5" : "1";
 
     const onChangeTaskTitle = (newTitle: string) => {
         if (newTitle !== task.title) {
-            dispatch(updateTaskTC(todoId, task.id, newTitle, task.status))
+            dispatch(updateTaskTC(todoId, task.id, task.title, task.status))
         }
     }
 
@@ -33,7 +33,7 @@ export const Task = React.memo((props: TaskPropsType) => {
         <div className={styles.TaskBlock}>
             <Checkbox checked={task.status === TaskStatuses.Completed} color="primary"
                       onChange={onChangeTaskStatus}/>
-            <div style={{marginRight: "5px", opacity: color}}>
+            <div style={{marginRight: "5px", opacity: color, width: "80%"}}>
                 <EditableTitle title={task.title}
                                changeTitle={onChangeTaskTitle}
                 />
