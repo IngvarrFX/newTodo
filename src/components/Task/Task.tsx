@@ -4,7 +4,7 @@ import {EditableTitle} from "../EditableTitle";
 import Checkbox from "@material-ui/core/Checkbox";
 import {TaskStatuses} from "../../api/types";
 import {updateTaskTC} from "../../store/thunks/taskThunks";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../hooks/hooks";
 
 
 type TaskPropsType = {
@@ -14,7 +14,7 @@ type TaskPropsType = {
 
 export const Task = React.memo((props: TaskPropsType) => {
     const {task, todoId} = props;
-    const dispatch: any = useDispatch();
+    const dispatch = useAppDispatch();
 
     const color = task.status ? "0.5" : "1";
 

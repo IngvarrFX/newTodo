@@ -10,8 +10,7 @@ import {FilterType} from "../Todolists/types";
 import {TaskStatuses} from "../../api/types";
 import {Preloader} from "../Preloader";
 import {useAppSelector} from "../../hooks";
-import {useDispatch} from "react-redux";
-import {Dispatch} from "redux";
+import {useAppDispatch} from "../../hooks/hooks";
 
 
 type TodolistPropsType = {
@@ -41,15 +40,12 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     } = props;
 
     const tasks = useAppSelector((state) => state.tasks)[todoID];
-    const dispatch:Dispatch = useDispatch();
-
+    const dispatch = useAppDispatch();
     useEffect(() => {
-        // @ts-ignore
         dispatch(getTasksTC(todoID))
     }, [])
 
     const addTaskWrapper = useCallback((title: string) => {
-        // @ts-ignore
         dispatch(createTaskTC(todoID, title));
     }, [dispatch, todoID]);
 
@@ -57,8 +53,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         changeTodoTitle(newTitle, todoID,);
     }, [changeTodoTitle, todoID])
 
-    const removeTaskHandle = (taskId: string)=> {
-        //@ts-ignore
+    const removeTaskHandle = (taskId: string) => {
         dispatch(removeTaskTC(todoID, taskId))
     }
 
@@ -95,7 +90,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                     </div>
                 </div>
 
-                <div  className={styles.tasksWrapper}>
+                <div className={styles.tasksWrapper}>
                     {tasksForTodolist.map((task: any) => {
                         return <div className={styles.tasks}
                                     key={task.id}>
