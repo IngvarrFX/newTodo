@@ -1,11 +1,9 @@
-import {AnyAction} from "redux"
-import {ThunkAction} from "redux-thunk"
-import {AppStateType} from "../store";
+import {AppThunkType} from "../store";
 import {todolistsApi} from "../../api";
 import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, setTodolistsAC} from "../actions/todoActions";
 import {toggleInitializingAC} from "../actions/appActions";
 
-export const getTodolistsTC = (): ThunkAction<void, AppStateType, unknown, AnyAction> => (dispatch) => {
+export const getTodolistsTC = (): AppThunkType => (dispatch) => {
     dispatch(toggleInitializingAC(true))
     todolistsApi.getTodolists().then((todolists) => {
         dispatch(setTodolistsAC(todolists))
@@ -15,7 +13,7 @@ export const getTodolistsTC = (): ThunkAction<void, AppStateType, unknown, AnyAc
     })
 }
 
-export const addTodolistTC = (title: string): ThunkAction<void, AppStateType, unknown, AnyAction> => (dispatch) => {
+export const addTodolistTC = (title: string): AppThunkType => (dispatch) => {
     todolistsApi.createTodolist(title).then((todolist) => {
         todolist.filter = "All"
         dispatch(addTodolistAC(todolist.id, todolist))
@@ -24,7 +22,7 @@ export const addTodolistTC = (title: string): ThunkAction<void, AppStateType, un
     })
 }
 
-export const updateTodolistTC = (id: string, title: string): ThunkAction<void, AppStateType, unknown, AnyAction> => (dispatch) => {
+export const updateTodolistTC = (id: string, title: string): AppThunkType => (dispatch) => {
     todolistsApi.updateTodolist(id, title).then((res) => {
         if (!res.resultCode) {
             dispatch(changeTodolistTitleAC(id, title))
@@ -34,7 +32,7 @@ export const updateTodolistTC = (id: string, title: string): ThunkAction<void, A
     })
 }
 
-export const removeTodolistTC = (id: string): ThunkAction<void, AppStateType, unknown, AnyAction> => (dispatch) => {
+export const removeTodolistTC = (id: string): AppThunkType => (dispatch) => {
     todolistsApi.deleteTodolist(id).then((res) => {
         if (!res.resultCode) {
             dispatch(removeTodolistAC(id))
