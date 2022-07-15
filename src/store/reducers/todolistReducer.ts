@@ -1,5 +1,5 @@
 import {AddTodolistType, ChangeTodolistFilterType, ChangeTodolistTitleType, RemoveTodolistType} from "../actions";
-import {SetTodolistsType} from "../actions/actionsTypes";
+import {ChangeTodolistStatusType, SetTodolistsType} from "../actions/actionsTypes";
 import {TodoType} from "../../components/Todolists/types";
 
 export type TodolistActionsType = AddTodolistType
@@ -7,6 +7,7 @@ export type TodolistActionsType = AddTodolistType
     | ChangeTodolistFilterType
     | ChangeTodolistTitleType
     | SetTodolistsType
+    | ChangeTodolistStatusType
 
 export type TodolistReducerType = (state: TodoType[], action: TodolistActionsType) => TodoType[];
 
@@ -28,6 +29,9 @@ export const todolistReducer = (state: TodoType[] = initialState, action: Todoli
         }
         case "CHANGE_TODOLIST_TITLE": {
             return state.map((todo) => todo.id === action.todoId ? {...todo, title: action.title} : todo);
+        }
+        case "CHANGE_TODOLIST_STATUS": {
+            return state.map((todo) => todo.id === action.todoId ? {...todo, entityStatus: action.status} : todo);
         }
         default:
             return state;
