@@ -1,19 +1,20 @@
-import {todolistReducer} from "./todolistReducer";
-import {addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../actions";
+import {todolistReducer} from "../todolistReducer";
+import {addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../../actions";
 import {v1} from "uuid";
-import {TodoType} from "../../components/Todolists/types";
+import {TodoType} from "../../../components/Todolists/types";
+import {changeTodolistStatus} from "../../actions/todoActions";
 
 let todolists: Array<TodoType>;
 
 beforeEach(() => {
     todolists = [
-        {id: "todolistID1", title: "What to learn", filter: "All", addedDate: "", order: +v1()},
-        {id: "todolistID2", title: "What to need", filter: "All", addedDate: "", order: +v1()},
+        {id: "todolistID1", title: "What to learn", filter: "All", addedDate: "", order: +v1(), entityStatus:'idle'},
+        {id: "todolistID2", title: "What to need", filter: "All", addedDate: "", order: +v1(), entityStatus:'idle'},
     ];
 })
 
 test("shoud be add todolist", () => {
-    const newTodolist: TodoType = {id: "todolistID1", title: "What to fix", filter: "All", addedDate: "", order: +v1()};
+    const newTodolist: TodoType = {id: "todolistID1", title: "What to fix", filter: "All", addedDate: "", order: +v1(), entityStatus:'idle'};
     const newTodo = todolistReducer(todolists, addTodolistAC(newTodolist.id, newTodolist));
 
     expect(newTodo.length).toBe(3);
@@ -39,4 +40,11 @@ test("shoud be change todolist title", () => {
 
     expect(newTodo[0].title).toBe("Title was changed!");
     expect(newTodo[1].title).toBe("What to need");
+})
+
+test("shoud be change todolist entityStatus", () => {
+    const newTodo = todolistReducer(todolists, changeTodolistStatus("todolistID1", "loading"));
+
+    expect(newTodo[0].entityStatus).toBe("loading");
+
 })
