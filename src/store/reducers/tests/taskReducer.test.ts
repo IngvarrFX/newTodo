@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {taskReducer} from "./taskReducer";
+import {taskReducer} from "../taskReducer";
 import {
     addTaskAC,
     addTodolistAC,
@@ -7,9 +7,9 @@ import {
     changeTaskTitleAC,
     removeTaskAC,
     removeTodolistAC
-} from "../actions";
-import {TasksType, TodoType} from "../../components/Todolists/types";
-import {TaskPriorities, TaskStatuses} from "../../api/types";
+} from "../../actions";
+import {TasksType, TodoType} from "../../../components/Todolists/types";
+import {TaskPriorities, TaskStatuses} from "../../../api/types";
 
 let tasks: TasksType;
 
@@ -153,7 +153,14 @@ beforeEach(() => {
 })
 
 test("should be add empty array", () => {
-    const newTodolist: TodoType = {id: v1(), title: "What to fix", filter: "All", addedDate: "", order: +v1()};
+    const newTodolist: TodoType = {
+        id: v1(),
+        title: "What to fix",
+        filter: "All",
+        addedDate: "",
+        order: +v1(),
+        entityStatus: "idle"
+    };
     const action = addTodolistAC(newTodolist.id, newTodolist);
     const newTaskList = taskReducer(tasks, action);
     const keys = Object.keys(newTaskList);
