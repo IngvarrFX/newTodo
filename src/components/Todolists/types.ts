@@ -1,4 +1,5 @@
 import {TaskPriorities} from "../../api/types";
+import {StatusType} from "../../store/reducers/types";
 
 export type TaskType = {
     description: string
@@ -24,6 +25,8 @@ export type TodoType = {
     filter: FilterType
     addedDate: string
     order: number
+    entityStatus: StatusType
 }
+
 
 export type FilterType = "All" | "Completed" | "Active";

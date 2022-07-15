@@ -8,14 +8,16 @@ import {Delete} from "@material-ui/icons";
 import {createTaskTC, getTasksTC, removeTaskTC} from "../../store/thunks/taskThunks";
 import {FilterType} from "../Todolists/types";
 import {TaskStatuses} from "../../api/types";
-import {Preloader} from "../Preloader";
+import {Skeleton} from "../Preloader";
 import {useAppSelector} from "../../hooks";
 import {useAppDispatch} from "../../hooks/hooks";
+import {StatusType} from "../../store/reducers/types";
 
 
 type TodolistPropsType = {
     todoID: string
     title: string
+    entityStatus: StatusType
     filterTodo: FilterType
     filterTask: (todoID: string, filter: FilterType) => void
     removeTodo: (todoId: string) => void
@@ -33,6 +35,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     const {
         todoID,
         title,
+        entityStatus,
         filterTodo,
         filterTask,
         removeTodo,
@@ -41,6 +44,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
 
     const tasks = useAppSelector((state) => state.tasks)[todoID];
     const dispatch = useAppDispatch();
+
     useEffect(() => {
         dispatch(getTasksTC(todoID))
     }, [])
@@ -60,18 +64,20 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     let tasksForTodolist = tasks
 
     if (filterTodo === "Active") {
-        tasksForTodolist = tasks.filter((t: any) => t.status === TaskStatuses.Completed)
+        tasksForTodolist = tasks.filter((t: any) => t.status === TaskStatuses.New)
     }
     if (filterTodo === "Completed") {
-        tasksForTodolist = tasks.filter((t: any) => t.status === TaskStatuses.New)
+        tasksForTodolist = tasks.filter((t: any) => t.status === TaskStatuses.Completed)
     }
 
     if (!tasks) {
-        return <Preloader/>
+        return <Skeleton/>
     }
 
+    const inProcess = entityStatus === "loading";
+
     return (
-        <div className={styles.Wrapper}>
+        <div className={styles.Wrapper} >
             <div className={styles.TasksBlock}>
                 <div className={styles.InputBlock}>
                     <div style={{
@@ -80,13 +86,13 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                         justifyContent: "space-between",
                         alignItems: "center"
                     }}>
-                        <EditableTitle title={title} changeTitle={changeTodoTitleHandle}/>
-                        <IconButton aria-label="delete" size="medium" onClick={() => removeTodo(todoID)}>
+                        <EditableTitle title={title} changeTitle={changeTodoTitleHandle} disabled={inProcess}/>
+                        <IconButton aria-label="delete" size="medium" onClick={() => removeTodo(todoID)} disabled={inProcess}>
                             <Delete color={"inherit"}/>
                         </IconButton>
                     </div>
                     <div style={{marginBottom: "10px", display: "flex"}}>
-                        <AddItemForm placeholder={"New task"} callback={addTaskWrapper}/>
+                        <AddItemForm placeholder={"New task"} callback={addTaskWrapper} disabled={inProcess}/>
                     </div>
                 </div>
 
@@ -97,9 +103,11 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                             <Task
                                 task={task}
                                 todoId={todoID}
+                                status={inProcess}
+
                             />
                             <IconButton aria-label="delete" size="medium"
-                                        onClick={() => removeTaskHandle(task.id)}>
+                                        onClick={() => removeTaskHandle(task.id)} disabled={inProcess}>
                                 <Delete color={"inherit"}/>
                             </IconButton>
                         </div>
@@ -113,7 +121,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                         key={index}>
                         <Button variant={"text"} color={"primary"}
                                 style={{backgroundColor: filterTodo === filterType.filter ? "aquamarine" : ""}}
-                                onClick={() => filterTask(todoID, filterType.filter)}>{filterType.filter}</Button>
+                                onClick={() => filterTask(todoID, filterType.filter)} disabled={inProcess}>{filterType.filter}</Button>
                     </div>
                 })}
             </div>

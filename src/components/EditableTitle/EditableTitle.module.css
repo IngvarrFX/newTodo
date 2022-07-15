@@ -10,6 +10,12 @@
     scroll-behavior: smooth;
     word-wrap: break-word;
 }
+
+.title.disabled {
+    opacity: 0.5;
+}
+
 .Input{
     width: 92%;
 }
+

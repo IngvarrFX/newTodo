@@ -7,9 +7,10 @@ import {AddBox} from "@material-ui/icons";
 type AddItemFormPropsType = {
     placeholder: string
     callback: (title: string) => void
+    disabled?: boolean
 }
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
-    const {placeholder, callback} = props;
+    const {placeholder, callback, disabled} = props;
     const [value, setValue] = useState<string>("");
     const [error, setError] = useState("");
 
@@ -48,11 +49,12 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                            onKeyPress={onKeyPressHandle}
                            error={!!error}
                            helperText={error}
+                           disabled={disabled}
 
                 />
             </div>
             <div className={styles.Icon}>
-                <IconButton aria-label="add" size="medium" onClick={addItem}>
+                <IconButton aria-label="add" size="medium" onClick={addItem} disabled={disabled}>
                     <AddBox color={"inherit"}/>
                 </IconButton>
             </div>

@@ -6,20 +6,26 @@ import {TextField} from "@material-ui/core";
 type EditableTitlePropsType = {
     title: string
     changeTitle: (newTitle: string) => void
+    disabled?: boolean
 }
 
 export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
-    const {title, changeTitle} = props;
+    const {title, changeTitle, disabled} = props;
     const [edit, setEdit] = useState<boolean>(false);
     const [value, setValue] = useState<string>(title)
 
     const onDoubleClickHandle = useCallback(() => {
+        if (disabled) {
+            return;
+        }
         setEdit(true);
-    }, []);
+    }, [disabled]);
+
     const onBlurHandle = useCallback(() => {
         changeTitle(value);
         setEdit(false);
     }, [changeTitle, value]);
+
     const onChangeHandle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
     }, []);
@@ -30,6 +36,7 @@ export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
             setEdit(false);
         }
     }, [changeTitle, value]);
+
     return (
         <div className={styles.Wrapper}>
             {
@@ -42,9 +49,10 @@ export const EditableTitle = React.memo((props: EditableTitlePropsType) => {
                                onKeyPress={onKeyPressHandle}
                                onBlur={onBlurHandle}
                                autoFocus
+                               disabled={disabled}
 
                     />
-                    : <div className={styles.title} onDoubleClick={onDoubleClickHandle}>{title}</div>
+                    : <div className={disabled ?styles.title + " " + styles.disabled : styles.title} onDoubleClick={onDoubleClickHandle}>{title}</div>
             }
         </div>
     );
