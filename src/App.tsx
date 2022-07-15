@@ -5,11 +5,10 @@ import {Preloader} from "./components/Preloader";
 import {useAppSelector} from "./hooks";
 
 function App() {
+    const initializing = useAppSelector(state => state.app.initializing);
 
-    const initialize = useAppSelector(state => state.app.initializing);
-
-    if (initialize) {
-        return <div style={{top: "50%", left:"50%"}}><Preloader/></div>
+    if (initializing) {
+        return <div className={"Preloader"}><Preloader/></div>
     }
 
     return (<div className="App">
