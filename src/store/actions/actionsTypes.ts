@@ -1,9 +1,24 @@
 import {FilterType, TaskType, TodoType} from "../../components/Todolists/types";
+import {StatusType} from "../reducers/types";
 
 export type ToggleInitializingType = {
     type: "INITIALIZING"
     payload: {
         initializing: boolean
+    }
+};
+
+export type ChangeAppStatusType = {
+    type: "CHANGE_APP_STATUS"
+    payload: {
+        status: StatusType
+    }
+};
+
+export type SetErrorType = {
+    type: "SET_ERROR"
+    payload: {
+        error: string | null
     }
 };
 
@@ -33,6 +48,12 @@ export type ChangeTodolistTitleType = {
     type: "CHANGE_TODOLIST_TITLE"
     todoId: string
     title: string
+};
+
+export type ChangeTodolistStatusType = {
+    type: "CHANGE_TODOLIST_STATUS"
+    todoId: string
+    status: StatusType
 };
 
 export type SetTasksType = {
