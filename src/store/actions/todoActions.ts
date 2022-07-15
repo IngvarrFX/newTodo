@@ -1,13 +1,14 @@
 import {
     AddTodolistType,
-    ChangeTodolistFilterType,
+    ChangeTodolistFilterType, ChangeTodolistStatusType,
     ChangeTodolistTitleType,
     RemoveTodolistType,
     SetTodolistsType
 } from "./actionsTypes";
 import {FilterType, TodoType} from "../../components/Todolists/types";
+import {StatusType} from "../reducers/types";
 
-export const setTodolistsAC = (todolists: any): SetTodolistsType => {
+export const setTodolistsAC = (todolists: TodoType[]): SetTodolistsType => {
     return {type: "SET_TODOLISTS", todolists}
 };
 
@@ -25,5 +26,9 @@ export const changeTodolistFilterAC = (todoId: string, filter: FilterType): Chan
 
 export const changeTodolistTitleAC = (todoId: string, title: string): ChangeTodolistTitleType => {
     return {type: "CHANGE_TODOLIST_TITLE", todoId, title}
+};
+
+export const changeTodolistStatus = (todoId: string, status: StatusType): ChangeTodolistStatusType => {
+    return {type: "CHANGE_TODOLIST_STATUS", todoId, status}
 };
 
