@@ -1,0 +1,68 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: black;
+  opacity: 0.5;
+}
+.wrapper {
+  position: fixed;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px 30px 50px 50px;
+  z-index: 1000;
+  min-width: 100px;
+  min-height: 50px;
+  border-radius: 5px;
+  -webkit-box-shadow: 4px 4px 15px -6px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 15px -6px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 15px -6px rgba(34, 60, 80, 0.2);
+}
+
+.wrapper .headerModal {
+  display: flex;
+  position: relative;
+}
+.wrapper .headerModal h1 {
+  font-size: 22px;
+  font-weight: bold;
+}
+.wrapper .headerModal .close {
+  position: absolute;
+  right: 0;
+  opacity: 0.3;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+.wrapper .headerModal .close:hover {
+  opacity: 1;
+}
+.wrapper .headerModal .close:before, .wrapper .headerModal .close:after {
+  position: absolute;
+  left: 100%;
+  top: -100%;
+  content: "";
+  height: 25px;
+  width: 3px;
+  background-color: #333;
+}
+.wrapper .headerModal .close:before {
+  transform: rotate(45deg);
+}
+.wrapper .headerModal .close:after {
+  transform: rotate(-45deg);
+}
+.wrapper .otherContent {
+  position: relative;
+  z-index: 2;
+  padding: 10px;
+}
+.headerModal h1 {
+  margin-bottom: 10px;
+}
